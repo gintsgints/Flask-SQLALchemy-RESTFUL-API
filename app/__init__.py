@@ -7,7 +7,7 @@ def create_app(config_filename):
     app = Flask(__name__)
     app.config.from_object(config_filename)
 
-    from app.basemodels import db
+    from app.users.models import db
     db.init_app(app)
 
     # Blueprints   

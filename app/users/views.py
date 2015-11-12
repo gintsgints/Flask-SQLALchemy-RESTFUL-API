@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify, make_response
 from app.users.models import Users, UsersSchema
-from flask_restful import Api
-from app.basemodels import db
-from app.baseviews import Resource
+from flask_restful import Api, Resource
+from app.users.models import db
+ 
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
 
@@ -29,10 +29,10 @@ class UsersList(Resource):
     
     def post(self):
         raw_dict = request.get_json(force=True)
-        user_dict = raw_dict['data']['attributes']
         try:
-                schema.validate(user_dict)
-                user = Users(user_dict['email'], user_dict['name'],user_dict['is_active'], user_dict['role'])
+                schema.validate(raw_dict)
+                user_dict = raw_dict['data']['attributes']
+                user = Users(user_dict['email'], user_dict['name'],user_dict['is_active'])
                 user.add(user)            
                 query = Users.query.get(user.id)
                 results = schema.dump(query).data                
@@ -72,10 +72,12 @@ class UsersUpdate(Resource):
     def patch(self, id):
         user = Users.query.get_or_404(id)
         raw_dict = request.get_json(force=True)
-        user_dict = raw_dict['data']['attributes']
+        
         try:
+            schema.validate(raw_dict)
+            user_dict = raw_dict['data']['attributes']
             for key, value in user_dict.items():
-                schema.validate({key:value})
+                
                 setattr(user, key, value)
           
             user.update()            

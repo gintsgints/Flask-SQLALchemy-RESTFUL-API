@@ -12,6 +12,7 @@ MarkupSafe==0.23
 marshmallow==2.2.0
 marshmallow-jsonapi==0.3.0
 psycopg2==2.6.1
+PyJWT==1.4.0
 python-dateutil==2.4.2
 python-editor==0.4
 pytz==2015.7
