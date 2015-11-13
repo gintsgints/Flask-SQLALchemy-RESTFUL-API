@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
-from app.users.models import Users, UsersSchema
+from app.users.models import Users, UsersSchema, db
 from flask_restful import Api, Resource
-from app.users.models import db
+
  
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
@@ -111,5 +111,5 @@ class UsersUpdate(Resource):
                 return resp
         
 
-api.add_resource(UsersList, '/')
-api.add_resource(UsersUpdate, '/<int:id>')
+api.add_resource(UsersList, '.json')
+api.add_resource(UsersUpdate, '/<int:id>.json')
