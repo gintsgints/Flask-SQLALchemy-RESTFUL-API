@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
-from app.users.models import Users, UsersSchema, db
+from app.users.models import Users, UsersSchema
+from app.models import db
 from flask_restful import Api, Resource
 
  
